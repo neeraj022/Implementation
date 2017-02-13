@@ -16,6 +16,7 @@ public class Linkedlist
 		head.deleteDuplicateWoBuffer(head);
 		head.printLinkedList(head);
 
+		//add the two number
 		Node add1=new Node(3);
 		add1.append(1);
 		add1.append(5);
@@ -24,6 +25,17 @@ public class Linkedlist
 		add2.append(9);
 		add2.append(2);
 		add1.addTwoNumbers(add1,add2);
+
+		//find the start of the loop
+		Node start=new Node(1);
+		start.append(2);
+		start.append(3);
+		Node loopstart=start.append(4);
+		start.append(5);
+		start.append(6);
+		Node loopend=start.append(7);
+		loopend.next=loopstart;
+		start.findStartOfLoop(start);
 	}
 }
 
@@ -49,7 +61,7 @@ class Node
 	}
 
 	//method to append a node in the end
-	public void append(int data)
+	public Node append(int data)
 	{
 		Node end=new Node(data);
 		//now find the end node
@@ -69,7 +81,7 @@ class Node
 			//now current node will be tail node
 			currentNode.next=end;
 		}
-
+		return end;
 	}
 
 	public Node deleteNode(Node head, int data)
@@ -194,5 +206,32 @@ class Node
 		}
 		result=result.next;
 		result.printLinkedList(result);
+	}
+
+	/*
+	Find the loop start of faulty circular linked list
+	Concept: is to move two pointers, one at double the speed of other. Suppose loop starts after k iterations from head, then fast pointer will have a 
+	head start of k steps when slow pointer enter the loop. Thus they both will meet k steps before the start of the loop.
+	Once they meet, take a pointer to head of lise and equate their speed, they will meet at the start of the loop
+	*/
+
+	public void findStartOfLoop(Node head)
+	{
+		Node iterator1=head;
+		Node iterator2=head;
+		iterator1=iterator1.next.next;
+		iterator2=iterator2.next;
+		while(iterator2!=iterator1)
+		{
+			iterator1=iterator1.next.next;
+			iterator2=iterator2.next;
+		}
+		iterator2=head;
+		while(iterator2!=iterator1)
+		{
+			iterator1=iterator1.next;
+			iterator2=iterator2.next;
+		}
+		System.out.println("Loop start is: "+iterator1.data);
 	}
 }
