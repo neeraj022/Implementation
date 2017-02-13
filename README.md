@@ -2,3 +2,4 @@ This repository will have various implementation of Data structures using arrays
 
 Enumerating the implementations:
 1) Stack using arrays
+2) Queue using arrays
