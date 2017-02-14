@@ -1,21 +1,25 @@
 
-package com.neeraj.implementations.ObjectBasedStackQueue;
 public class ObjectBasedStackQueue 
 {
 	public static void main(String args[])
 	{
 		Stack stack=new Stack();
-		stack.push(25);
+		stack.push(65);
 		stack.push(45);
 		stack.push(100);
-		System.out.println(stack.size());
-		try{stack.pop();
-		}
-		catch (StackEmptyException e)
-		{
-			System.out.println(e);
-		}
-		System.out.println(stack.size());
+		stack.push(1);
+		stack.push(27);
+		stack.sortStack();
+		System.out.println(" Stack size is: "+stack.size());
+		stack.printStack();
+		// System.out.println(stack.size());
+		// try{stack.pop();
+		// }
+		// catch (StackEmptyException e)
+		// {
+		// 	System.out.println(e);
+		// }
+		// System.out.println(stack.size());
 
 
 		Queue queue=new Queue();
@@ -79,7 +83,7 @@ class Stack
 
 	public Object top()
 	{
-		return top;
+		return top.data;
 	}
 
 	public boolean isEmpty()
@@ -98,6 +102,57 @@ class Stack
 		}
 		return counter;
 	}
+
+	/*
+	Sort a stack in ascending order
+	int specific methods
+	*/
+	public void sortStack()
+	{
+		try
+		{
+		Stack toBeSorted=this;
+		Stack buffer=new Stack();
+		while(!toBeSorted.isEmpty())
+		{
+			int temp=(int)toBeSorted.pop();
+			while(!buffer.isEmpty() && (int)buffer.top()>temp)
+			{
+				toBeSorted.push(buffer.pop());
+			}
+			buffer.push(temp);
+		}
+		toBeSorted.top=buffer.top;
+	}
+	catch (StackEmptyException e)
+	{
+		System.out.println(e);
+	}
+	}
+//int specific methods
+	public void printStack()
+	{
+		try{
+		Stack stack=this;
+		Stack buffer=new Stack();
+		while(!stack.isEmpty())
+		{
+			int temp=(int)stack.pop();
+			System.out.print(temp+" ");
+			buffer.push(temp);
+		}
+		while(!buffer.isEmpty())
+		{
+			stack.push(buffer.pop());
+		}
+	}
+	catch (StackEmptyException e)
+	{
+		System.out.println(e);
+	}
+		System.out.println("");
+	}
+	
 }
 
 class Queue
