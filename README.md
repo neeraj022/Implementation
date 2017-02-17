@@ -8,5 +8,6 @@ Enumerating the implementations:<br>
 	3.2) Find the loop start of a faulty circular linked list. <br>
 4) Object based Stack and Queue implementation <br>
 	4.1) Sort a stack in ascending order <br>
+5) Binary Search Tree implementation with insert, search, delete <br>
 
 
