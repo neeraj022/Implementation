@@ -268,20 +268,125 @@ public class BinarySearchTree
 		System.out.print(root.data+" ");
 	}
 
+	//if distance difference between two leaf nodes is more than 1, then tree is unbalanced
+	public boolean checkIfBalanced()
+	{
+		return ((this.maxHeight(this.root)-this.minHeight(this.root))>1)? false :true;
+	}
+
+	public int maxHeight(Node root)
+	{
+		if(root==null)
+		{
+			return 0;
+		}
+		return 1+Math.max(this.maxHeight(root.left), this.maxHeight(root.right));
+	}
+
+	public int minHeight(Node root)
+	{
+		if(root==null)
+		{
+			return 0;
+		}
+		return 1+Math.min(this.minHeight(root.left), this.minHeight(root.right));
+	}
+
+	/*
+		Given a sorted array in increasing order, construct a binary search tree with minimum height bst
+	*/
+		public Node constructMinHeightTree(int[] input, int start,int end)
+		{
+			if(start>end)
+			{
+				return null;
+			}
+			int mid=(start+end)/2;
+			Node newNode=new Node(input[mid]);
+			newNode.left=this.constructMinHeightTree(input, start, mid-1);
+			newNode.right=this.constructMinHeightTree(input, mid+1 ,end);
+			return newNode;
+		} 
+
+		/*public Node inOrderSuccessor(Node input)
+		{
+			//if its a leaf node, successor is keep going up until you are left child, parent is successor
+			//if its internal node, keep going right down, until left is null, 
+			if(input.left!=null || input.right!=null)
+			{
+				//its a internal node
+				Node iterator=input.right;
+				while(iterator!=null && iterator.left==null)
+				{
+					iterator=iterator.left;
+				}
+				return iterator;
+			}
+			else if(input.left==null && input.right==null)
+			{
+				Node iterator=input;
+				while(iterator!=null && iterator.data<iterator.parent.data)
+				{
+					iterator=iterator.parent;
+				}
+				if(iterator==null)
+				{
+					return null;
+				}
+				return iterator.parent;
+			}
+			return null;
+		}*/
+		int c=0;
+		public void printKthLargest(Node root, int k)
+		{
+			if(root==null)
+			{
+				return;
+			}
+			if(c>k)
+			{
+				return;
+			}
+			printKthLargest(root.right, k);
+			c++;
+			if(c==k)
+			{
+				
+				return;
+			}
+			printKthLargest(root.left, k);
+			return;
+
+		}
+
 	//testing
 	public static void main(String[] args)
 	{
 		BinarySearchTree bst=new BinarySearchTree(25);
 		bst.insert(24);
-		bst.insert(12);
+		bst.insert(26);
 		bst.insert(14);
-		bst.delete(25);
-		bst.inOrderTraversel();
-		System.out.println();
-		bst.preOrderTraversel();
-		System.out.println();
-		bst.postOrderTraversel();
-		System.out.println("search result is: "+bst.search(26));
+		bst.insert(17);
+		bst.printKthLargest(bst.root, 3);
+		// System.out.println(bst.checkIfBalanced());
+		// bst.delete(25);
+		// bst.inOrderTraversel();
+		// System.out.println();
+		// bst.preOrderTraversel();
+		// System.out.println();
+		// bst.postOrderTraversel();
+		// System.out.println("search result is: "+bst.search(26));
+		// System.out.println("Tree being constructed using arrays ");
+		// int[] input=new int[10];
+		// for(int i=0;i<10;i++)
+		// {
+		// 	input[i]=i+1;
+		// }
+		// Node root=bst.constructMinHeightTree(input, 0,9);
+		// bst.root=root;
+		// bst.inOrderTraversel();
+		// bst.preOrderTraversel();
 	}
 }
 
