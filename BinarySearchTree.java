@@ -360,6 +360,34 @@ public class BinarySearchTree
 
 		}
 
+
+		/*
+			vertical traversal
+		*/
+			public void verticalTraversal(Node root, Integer hd, HashMap<Integer, ArrayList<Node>> map)
+			{
+				if(root==null)
+				{
+					return;
+				}
+				
+				verticalTraversal(root.left,hd-1,map);
+				ArrayList<Node> myList=map.get(hd);
+				if(myList==null)
+				{
+						myList=new ArrayList<Node>();
+						myList.add(root);
+						map.put(hd,myList);
+				}
+				else
+				{
+						myList.add(root);
+						map.put(hd,myList);
+				}
+				verticalTraversal(root.right,hd+1,map);
+
+			}
+
 	//testing
 	public static void main(String[] args)
 	{
@@ -368,7 +396,7 @@ public class BinarySearchTree
 		bst.insert(26);
 		bst.insert(14);
 		bst.insert(17);
-		bst.printKthLargest(bst.root, 3);
+		//bst.printKthLargest(bst.root, 3);
 		// System.out.println(bst.checkIfBalanced());
 		// bst.delete(25);
 		// bst.inOrderTraversel();
@@ -387,6 +415,21 @@ public class BinarySearchTree
 		// bst.root=root;
 		// bst.inOrderTraversel();
 		// bst.preOrderTraversel();
+		HashMap<Integer,ArrayList<Node>> result=new HashMap<Integer,ArrayList<Node>>();
+		bst.verticalTraversal(bst.root, new Integer(0), result);
+		List sortedKeys=new ArrayList(result.keySet());
+		Collections.sort(sortedKeys);
+		for (int j=0;j<sortedKeys.size();j++){
+			ArrayList<Node> myList=result.get(sortedKeys.get(j));
+			for(int i=0;i<myList.size();i++)
+			{
+				String value = String.valueOf(myList.get(i).data);  
+            	System.out.println(((Integer)sortedKeys.get(j)).intValue() + " " + value);  
+			}
+            
+
+
+} 
 	}
 }
 
